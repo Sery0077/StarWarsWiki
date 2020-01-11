@@ -1,6 +1,7 @@
 package dev.bonch.starwarswiki.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
-
 
 private lateinit var recyclerView: RecyclerView
 private lateinit var films: Array<Film.Film>
@@ -121,6 +121,11 @@ class FilmFragment: Fragment() {
         val adapter = object: Adapter(films) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = films[position].title
+                holder.itemView.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putParcelable("film", films[position])
+                    (context as MainActivity).navigateToViewItemFragment(bundle)
+                }
                 super.onBindViewHolder(holder, position)
             }
         }

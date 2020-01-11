@@ -1,6 +1,7 @@
 package dev.bonch.starwarswiki.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,7 @@ class PeopleFragment: Fragment() {
         CoroutineScope(Dispatchers.Main).launch{getPeopleList()}
 
         setClicker()
+
         return view
     }
 
@@ -58,7 +60,7 @@ class PeopleFragment: Fragment() {
         recyclerView = view.findViewById(R.id.people_recycler_view)
         errorTW = view.findViewById(R.id.error_text_view)
         progressBar = view.findViewById(R.id.progress_bar)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.layoutManager = LinearLayoutManager(activity@context)
 
         val activity = activity as MainActivity
         searchBtn = activity.findViewById(R.id.search)
