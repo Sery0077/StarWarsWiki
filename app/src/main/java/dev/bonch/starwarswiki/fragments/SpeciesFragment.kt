@@ -27,7 +27,7 @@ private lateinit var progressBar: ProgressBar
 private lateinit var searchBtn: Button
 private lateinit var searchEt: EditText
 
-class SpeciesFragment: Fragment() {
+class SpeciesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,7 @@ class SpeciesFragment: Fragment() {
 
         service = RetrofitFactory.makeRetrofitService()
 
-        CoroutineScope(Dispatchers.Main).launch{getSpeciesList()}
+        CoroutineScope(Dispatchers.Main).launch { getSpeciesList() }
 
         setClicker()
         return view
@@ -56,7 +56,9 @@ class SpeciesFragment: Fragment() {
         searchBtn = activity.findViewById(R.id.search)
         searchEt = activity.findViewById(R.id.text_search)
         searchEt.hint = "Enter a name of specie"
-        recyclerView.layoutManager = LinearLayoutManager(activity@context)
+        searchEt.visibility = View.VISIBLE
+        searchBtn.visibility = View.VISIBLE
+        recyclerView.layoutManager = LinearLayoutManager(activity@ context)
     }
 
     private suspend fun getSpeciesList() {
@@ -82,13 +84,13 @@ class SpeciesFragment: Fragment() {
         searchBtn.setOnClickListener {
             if (searchEt.text.isNullOrEmpty()) {
                 Toast.makeText(this.context, "Enter a name for search!", Toast.LENGTH_SHORT).show()
-            } else{
-                CoroutineScope(Dispatchers.Main).launch {searchSpecie(searchEt.text.toString())}
+            } else {
+                CoroutineScope(Dispatchers.Main).launch { searchSpecie(searchEt.text.toString()) }
             }
         }
 
         errorTW.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch{getSpeciesList()}
+            CoroutineScope(Dispatchers.Main).launch { getSpeciesList() }
         }
     }
 
@@ -117,7 +119,7 @@ class SpeciesFragment: Fragment() {
     }
 
     private fun updateRecyclerData(species: Array<Specie.Specie>) {
-        val adapter = object: Adapter(species) {
+        val adapter = object : Adapter(species) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = species[position].name
                 holder.itemView.setOnClickListener {

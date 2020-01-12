@@ -1,10 +1,8 @@
 package dev.bonch.starwarswiki.models
 
 import android.os.Parcelable
-import android.util.Log
 import dev.bonch.starwarswiki.network.retrofit.RetrofitFactory
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.*
 import java.io.IOException
 
 class Film {
@@ -33,12 +31,8 @@ class Film {
         val url: String
     ) : Parcelable
 
-    fun kek() {
-
-    }
-
     companion object {
-        suspend fun factoryForViewFilm(film: Film): String {
+        suspend fun factoryDescription(film: Film): String {
             var string = ""
             string += "Title of film: ${film.title} \n\n"
             string += "Episode number: ${film.episode_id} \n\n"
@@ -50,135 +44,22 @@ class Film {
             return string
         }
 
-        suspend fun getCharactersNames(characters: Array<String>): Array<String?> {
+        suspend fun getFilmsNames(films: Array<String>): Array<String?> {
             val service = RetrofitFactory.makeRetrofitService()
             var names: Array<String?> = emptyArray()
-            var array: Array<Deferred<String?>> = emptyArray()
-            lateinit var job: Deferred<Array<String?>>
-            for (element in characters) {
-                job = CoroutineScope(Dispatchers.Main).async {
-                    array += CoroutineScope(Dispatchers.IO).async {
-                        try {
-                            val response = service.getCharactersNames(element)
-                            if (response.isSuccessful) {
-                                return@async response.body()!!.name
-                            } else {
-                                return@async null
-                            }
-                        } catch (err: IOException) {
-                            return@async null
-                        }
+            for (element in films) {
+                names += try {
+                    val response = service.getFilmsNames(element)
+                    if (response.isSuccessful) {
+                        response.body()!!.title
+                    } else {
+                        "Error"
                     }
-                    for (i in 0..characters.size - 1) names += array[i].await()
-                    return@async names
+                } catch (err: IOException) {
+                    "Error"
                 }
             }
-            return job.await()
+            return names
         }
-
-        suspend fun getStarshipsNames(starships: Array<String>): Array<String?> {
-            val service = RetrofitFactory.makeRetrofitService()
-            var names: Array<String?> = emptyArray()
-            var array: Array<Deferred<String?>> = emptyArray()
-            lateinit var job: Deferred<Array<String?>>
-            for (element in starships) {
-                job = CoroutineScope(Dispatchers.Main).async {
-                    array += CoroutineScope(Dispatchers.IO).async {
-                        try {
-                            val response = service.getStarshipsNames(element)
-                            if (response.isSuccessful) {
-                                return@async response.body()!!.name
-                            } else {
-                                return@async null
-                            }
-                        } catch (err: IOException) {
-                            return@async null
-                        }
-                    }
-                    for (i in 0..starships.size - 1) names += array[i].await()
-                    return@async names
-                }
-            }
-            return job.await()
-        }
-
-        suspend fun getPlanetsNames(planets: Array<String>): Array<String?> {
-            val service = RetrofitFactory.makeRetrofitService()
-            var names: Array<String?> = emptyArray()
-            var array: Array<Deferred<String?>> = emptyArray()
-            lateinit var job: Deferred<Array<String?>>
-            for (element in planets) {
-                job = CoroutineScope(Dispatchers.Main).async {
-                    array += CoroutineScope(Dispatchers.IO).async {
-                        try {
-                            val response = service.getPlanetsNames(element)
-                            if (response.isSuccessful) {
-                                return@async response.body()!!.name
-                            } else {
-                                return@async null
-                            }
-                        } catch (err: IOException) {
-                            return@async null
-                        }
-                    }
-                    for (i in 0..planets.size - 1) names += array[i].await()
-                    return@async names
-                }
-            }
-            return job.await()
-        }
-
-        suspend fun getVehiclesNames(vehicles: Array<String>): Array<String?> {
-            val service = RetrofitFactory.makeRetrofitService()
-            var names: Array<String?> = emptyArray()
-            var array: Array<Deferred<String?>> = emptyArray()
-            lateinit var job: Deferred<Array<String?>>
-            for (element in vehicles) {
-                job = CoroutineScope(Dispatchers.Main).async {
-                    array += CoroutineScope(Dispatchers.IO).async {
-                        try {
-                            val response = service.getVehiclesNames(element)
-                            if (response.isSuccessful) {
-                                return@async response.body()!!.name
-                            } else {
-                                return@async null
-                            }
-                        } catch (err: IOException) {
-                            return@async null
-                        }
-                    }
-                    for (i in 0..vehicles.size - 1) names += array[i].await()
-                    return@async names
-                }
-            }
-            return job.await()
-        }
-
-        suspend fun getSpeciesNames(species: Array<String>): Array<String?> {
-            val service = RetrofitFactory.makeRetrofitService()
-            var names: Array<String?> = emptyArray()
-            var array: Array<Deferred<String?>> = emptyArray()
-            lateinit var job: Deferred<Array<String?>>
-            for (element in species) {
-                job = CoroutineScope(Dispatchers.Main).async {
-                    array += CoroutineScope(Dispatchers.IO).async {
-                        try {
-                            val response = service.getSpeciesNames(element)
-                            if (response.isSuccessful) {
-                                return@async response.body()!!.name
-                            } else {
-                                return@async null
-                            }
-                        } catch (err: IOException) {
-                            return@async null
-                        }
-                    }
-                    for (i in 0..species.size - 1) names += array[i].await()
-                    return@async names
-                }
-            }
-            return job.await()
-        }
-
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,12 +26,20 @@
                     android:layout_height="match_parent"
                     android:layout_weight="82" />
 
-            <Button
-                android:id="@+id/search"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="18"
-                android:background="@drawable/ic_search"/>
+                <TextView
+                    android:id="@+id/name_item"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="18"
+                    android:background="@drawable/ic_search" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 

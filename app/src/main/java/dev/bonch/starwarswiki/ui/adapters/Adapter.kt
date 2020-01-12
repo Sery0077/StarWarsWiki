@@ -9,10 +9,11 @@ import dev.bonch.starwarswiki.R
 
 open class Adapter(private val items: Array<*>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var nameItem: TextView? = null
+
         init {
-            nameItem = itemView?.findViewById(R.id.name)
+            nameItem = itemView.findViewById(R.id.name)
         }
     }
 

@@ -14,7 +14,9 @@ import dev.bonch.starwarswiki.models.People
 import dev.bonch.starwarswiki.network.retrofit.RetrofitFactory
 import dev.bonch.starwarswiki.network.retrofit.RetrofitService
 import dev.bonch.starwarswiki.ui.adapters.Adapter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 private lateinit var recyclerView: RecyclerView
@@ -25,7 +27,7 @@ private lateinit var progressBar: ProgressBar
 private lateinit var searchBtn: Button
 private lateinit var searchEt: EditText
 
-class PeopleFragment: Fragment() {
+class PeopleFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +39,7 @@ class PeopleFragment: Fragment() {
         initView(view)
         service = RetrofitFactory.makeRetrofitService()
 
-        CoroutineScope(Dispatchers.Main).launch{getPeopleList()}
+        CoroutineScope(Dispatchers.Main).launch { getPeopleList() }
 
         setClicker()
 
@@ -45,12 +47,12 @@ class PeopleFragment: Fragment() {
     }
 
     private fun updateRecyclerData(peoples: Array<People.People>) {
-        val adapter = object: Adapter(peoples) {
+        val adapter = object : Adapter(peoples) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = peoples[position].name
                 holder.itemView.setOnClickListener {
                     val bundle = Bundle()
-                    bundle.putParcelable("film", peoples[position])
+                    bundle.putParcelable("people", peoples[position])
                     (context as MainActivity).navigateToViewItemFragmentFromPeoples(bundle)
                 }
                 super.onBindViewHolder(holder, position)
@@ -64,11 +66,13 @@ class PeopleFragment: Fragment() {
         recyclerView = view.findViewById(R.id.people_recycler_view)
         errorTW = view.findViewById(R.id.error_text_view)
         progressBar = view.findViewById(R.id.progress_bar)
-        recyclerView.layoutManager = LinearLayoutManager(activity@context)
+        recyclerView.layoutManager = LinearLayoutManager(activity@ context)
 
         val activity = activity as MainActivity
         searchBtn = activity.findViewById(R.id.search)
         searchEt = activity.findViewById(R.id.text_search)
+        searchEt.visibility = View.VISIBLE
+        searchBtn.visibility = View.VISIBLE
         searchEt.hint = "Enter a name of people"
     }
 
@@ -95,13 +99,13 @@ class PeopleFragment: Fragment() {
         searchBtn.setOnClickListener {
             if (searchEt.text.isNullOrEmpty()) {
                 Toast.makeText(this.context, "Enter a title for search!", Toast.LENGTH_SHORT).show()
-            } else{
-                CoroutineScope(Dispatchers.Main).launch {searchFilm(searchEt.text.toString())}
+            } else {
+                CoroutineScope(Dispatchers.Main).launch { searchFilm(searchEt.text.toString()) }
             }
         }
 
         errorTW.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch{getPeopleList()}
+            CoroutineScope(Dispatchers.Main).launch { getPeopleList() }
         }
     }
 

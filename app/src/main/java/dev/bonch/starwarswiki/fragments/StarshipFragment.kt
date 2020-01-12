@@ -27,7 +27,7 @@ private lateinit var progressBar: ProgressBar
 private lateinit var searchBtn: Button
 private lateinit var searchEt: EditText
 
-class StarshipFragment: Fragment() {
+class StarshipFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,7 @@ class StarshipFragment: Fragment() {
 
         service = RetrofitFactory.makeRetrofitService()
 
-        CoroutineScope(Dispatchers.Main).launch{getStarshipList()}
+        CoroutineScope(Dispatchers.Main).launch { getStarshipList() }
 
         setClicker()
         return view
@@ -55,8 +55,10 @@ class StarshipFragment: Fragment() {
         val activity = activity as MainActivity
         searchBtn = activity.findViewById(R.id.search)
         searchEt = activity.findViewById(R.id.text_search)
+        searchEt.visibility = View.VISIBLE
+        searchBtn.visibility = View.VISIBLE
         searchEt.hint = "Enter a name of starship"
-        recyclerView.layoutManager = LinearLayoutManager(activity@context)
+        recyclerView.layoutManager = LinearLayoutManager(activity@ context)
     }
 
     private suspend fun getStarshipList() {
@@ -82,13 +84,13 @@ class StarshipFragment: Fragment() {
         searchBtn.setOnClickListener {
             if (searchEt.text.isNullOrEmpty()) {
                 Toast.makeText(this.context, "Enter a name for search!", Toast.LENGTH_SHORT).show()
-            } else{
-                CoroutineScope(Dispatchers.Main).launch {searchStarship(searchEt.text.toString())}
+            } else {
+                CoroutineScope(Dispatchers.Main).launch { searchStarship(searchEt.text.toString()) }
             }
         }
 
         errorTW.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch{getStarshipList()}
+            CoroutineScope(Dispatchers.Main).launch { getStarshipList() }
         }
     }
 
@@ -117,12 +119,12 @@ class StarshipFragment: Fragment() {
     }
 
     private fun updateRecyclerData(starships: Array<Starship.Starship>) {
-        val adapter = object: Adapter(starships) {
+        val adapter = object : Adapter(starships) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = starships[position].name
                 holder.itemView.setOnClickListener {
                     val bundle = Bundle()
-                    bundle.putParcelable("film", starships[position])
+                    bundle.putParcelable("starship", starships[position])
                     (context as MainActivity).navigateToViewItemFragmentFromStarships(bundle)
                 }
                 super.onBindViewHolder(holder, position)

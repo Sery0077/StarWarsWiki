@@ -7,6 +7,7 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface RetrofitService {
+
     //Getting lists
     @GET("people/")
     suspend fun getPeoplesList(): Response<People.Pojo>
@@ -27,7 +28,6 @@ interface RetrofitService {
     suspend fun getStarshipsList(): Response<Starship.Pojo>
 
     //searching
-
     @GET("people/")
     suspend fun searchPeople(@Query("search") name: String): Response<People.Pojo>
 
@@ -47,7 +47,6 @@ interface RetrofitService {
     suspend fun searchSpecie(@Query("search") title: String): Response<Specie.Pojo>
 
     //Getting names
-
     @GET
     suspend fun getCharactersNames(@Url url: String): Response<People.People>
 
@@ -63,4 +62,6 @@ interface RetrofitService {
     @GET
     suspend fun getSpeciesNames(@Url url: String): Response<Specie.Specie>
 
+    @GET
+    suspend fun getFilmsNames(@Url url: String): Response<Film.Film>
 }

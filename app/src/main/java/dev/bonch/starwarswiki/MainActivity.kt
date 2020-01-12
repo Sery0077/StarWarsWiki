@@ -1,7 +1,7 @@
 package dev.bonch.starwarswiki
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -28,7 +28,14 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_people, R.id.nav_film, R.id.nav_planet, R.id.nav_species, R.id.nav_species, R.id.nav_vehicle), drawerLayout
+            setOf(
+                R.id.nav_people,
+                R.id.nav_film,
+                R.id.nav_planet,
+                R.id.nav_species,
+                R.id.nav_species,
+                R.id.nav_vehicle
+            ), drawerLayout
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)

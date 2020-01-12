@@ -19,7 +19,7 @@
         android:id="@+id/nav_film"
         android:name="dev.bonch.starwarswiki.fragments.FilmFragment"
         android:label="FilmFragment"
-        tools:layout="@layout/film_fragment" >
+        tools:layout="@layout/film_fragment">
         <action
             android:id="@+id/action_nav_film_to_nav_view_item_fragment"
             app:destination="@id/nav_view_item_fragment" />
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/nav_view_item_fragment"
-        android:name="dev.bonch.starwarswiki.fragments.ViewItemFragment"/>
+        android:name="dev.bonch.starwarswiki.fragments.ViewItemFragment" />
 
     <fragment
         android:id="@+id/nav_planet"

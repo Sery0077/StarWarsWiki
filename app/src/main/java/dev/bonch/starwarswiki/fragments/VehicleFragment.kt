@@ -27,7 +27,7 @@ private lateinit var progressBar: ProgressBar
 private lateinit var searchBtn: Button
 private lateinit var searchEt: EditText
 
-class VehicleFragment: Fragment() {
+class VehicleFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,7 @@ class VehicleFragment: Fragment() {
 
         service = RetrofitFactory.makeRetrofitService()
 
-        CoroutineScope(Dispatchers.Main).launch{getVehicleList()}
+        CoroutineScope(Dispatchers.Main).launch { getVehicleList() }
 
         setClicker()
         return view
@@ -55,8 +55,10 @@ class VehicleFragment: Fragment() {
         val activity = activity as MainActivity
         searchBtn = activity.findViewById(R.id.search)
         searchEt = activity.findViewById(R.id.text_search)
+        searchEt.visibility = View.VISIBLE
+        searchBtn.visibility = View.VISIBLE
         searchEt.hint = "Enter a name of vehicle"
-        recyclerView.layoutManager = LinearLayoutManager(activity@context)
+        recyclerView.layoutManager = LinearLayoutManager(activity@ context)
     }
 
     private suspend fun getVehicleList() {
@@ -82,13 +84,12 @@ class VehicleFragment: Fragment() {
         searchBtn.setOnClickListener {
             if (searchEt.text.isNullOrEmpty()) {
                 Toast.makeText(this.context, "Enter a name for search!", Toast.LENGTH_SHORT).show()
-            } else{
-                CoroutineScope(Dispatchers.Main).launch {searchVehicle(searchEt.text.toString())}
+            } else {
+                CoroutineScope(Dispatchers.Main).launch { searchVehicle(searchEt.text.toString()) }
             }
         }
-
         errorTW.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch{getVehicleList()}
+            CoroutineScope(Dispatchers.Main).launch { getVehicleList() }
         }
     }
 
@@ -117,12 +118,12 @@ class VehicleFragment: Fragment() {
     }
 
     private fun updateRecyclerData(vehicles: Array<Vehicle.Vehicle>) {
-        val adapter = object: Adapter(vehicles) {
+        val adapter = object : Adapter(vehicles) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = vehicles[position].name
                 holder.itemView.setOnClickListener {
                     val bundle = Bundle()
-                    bundle.putParcelable("film", vehicles[position])
+                    bundle.putParcelable("vehicle", vehicles[position])
                     (context as MainActivity).navigateToViewItemFragmentFromVehicles(bundle)
                 }
                 super.onBindViewHolder(holder, position)
