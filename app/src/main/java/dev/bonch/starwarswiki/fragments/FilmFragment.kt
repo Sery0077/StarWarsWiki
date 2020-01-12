@@ -1,7 +1,6 @@
 package dev.bonch.starwarswiki.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +26,9 @@ private lateinit var errorTW: TextView
 private lateinit var progressBar: ProgressBar
 private lateinit var searchBtn: Button
 private lateinit var searchEt: EditText
+private lateinit var adapter: Adapter
 
-class FilmFragment: Fragment() {
+class FilmFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class FilmFragment: Fragment() {
 
         service = RetrofitFactory.makeRetrofitService()
 
-        CoroutineScope(Dispatchers.Main).launch{getFilmList()}
+        CoroutineScope(Dispatchers.Main).launch { getFilmList() }
 
         setClicker()
         return view
@@ -56,8 +56,10 @@ class FilmFragment: Fragment() {
         val activity = activity as MainActivity
         searchBtn = activity.findViewById(R.id.search)
         searchEt = activity.findViewById(R.id.text_search)
+        searchEt.visibility = View.VISIBLE
+        searchBtn.visibility = View.VISIBLE
         searchEt.hint = "Enter a title of film"
-        recyclerView.layoutManager = LinearLayoutManager(activity@context)
+        recyclerView.layoutManager = LinearLayoutManager(activity@ context)
     }
 
     private suspend fun getFilmList() {
@@ -83,13 +85,13 @@ class FilmFragment: Fragment() {
         searchBtn.setOnClickListener {
             if (searchEt.text.isNullOrEmpty()) {
                 Toast.makeText(this.context, "Enter a title for search!", Toast.LENGTH_SHORT).show()
-            } else{
-                CoroutineScope(Dispatchers.Main).launch {searchFilm(searchEt.text.toString())}
+            } else {
+                CoroutineScope(Dispatchers.Main).launch { searchFilm(searchEt.text.toString()) }
             }
         }
 
         errorTW.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch{getFilmList()}
+            CoroutineScope(Dispatchers.Main).launch { getFilmList() }
         }
     }
 
@@ -118,13 +120,13 @@ class FilmFragment: Fragment() {
     }
 
     private fun updateRecyclerData(films: Array<Film.Film>) {
-        val adapter = object: Adapter(films) {
+        adapter = object : Adapter(films) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = films[position].title
                 holder.itemView.setOnClickListener {
                     val bundle = Bundle()
                     bundle.putParcelable("film", films[position])
-                    (context as MainActivity).navigateToViewItemFragment(bundle)
+                    (context as MainActivity).navigateToViewItemFragmentFromFilms(bundle)
                 }
                 super.onBindViewHolder(holder, position)
             }

@@ -6,11 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_people"
-            android:title="People"/>
+            android:title="People" />
 
         <item
             android:id="@+id/nav_film"
-            android:title="Films"/>
+            android:title="Films" />
+
+        <item
+            android:id="@+id/nav_vehicle"
+            android:title="Vehicles" />
+
+        <item
+            android:id="@+id/nav_planet"
+            android:title="Planets" />
+
+        <item
+            android:id="@+id/nav_starship"
+            android:title="Starships" />
+
+        <item
+            android:id="@+id/nav_species"
+            android:title="Species" />
     </group>
 
 </menu>
