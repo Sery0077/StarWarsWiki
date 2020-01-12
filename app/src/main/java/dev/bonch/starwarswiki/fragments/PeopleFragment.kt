@@ -1,7 +1,6 @@
 package dev.bonch.starwarswiki.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +48,11 @@ class PeopleFragment: Fragment() {
         val adapter = object: Adapter(peoples) {
             override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                 holder.nameItem?.text = peoples[position].name
+                holder.itemView.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putParcelable("film", peoples[position])
+                    (context as MainActivity).navigateToViewItemFragmentFromPeoples(bundle)
+                }
                 super.onBindViewHolder(holder, position)
             }
         }
@@ -71,7 +75,7 @@ class PeopleFragment: Fragment() {
     private suspend fun getPeopleList() {
         progressBar.visibility = View.VISIBLE
         try {
-            val response = service.getPeopleList()
+            val response = service.getPeoplesList()
             if (response.isSuccessful) {
                 peoples = response.body()!!.results
                 updateRecyclerData(peoples)

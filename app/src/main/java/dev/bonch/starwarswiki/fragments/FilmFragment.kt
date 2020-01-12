@@ -1,7 +1,6 @@
 package dev.bonch.starwarswiki.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,7 +123,7 @@ class FilmFragment: Fragment() {
                 holder.itemView.setOnClickListener {
                     val bundle = Bundle()
                     bundle.putParcelable("film", films[position])
-                    (context as MainActivity).navigateToViewItemFragment(bundle)
+                    (context as MainActivity).navigateToViewItemFragmentFromFilms(bundle)
                 }
                 super.onBindViewHolder(holder, position)
             }

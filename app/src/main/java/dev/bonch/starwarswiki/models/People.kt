@@ -1,5 +1,8 @@
 package dev.bonch.starwarswiki.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 class People() {
     data class Pojo (
         val count: Int,
@@ -7,7 +10,7 @@ class People() {
         val previous: String?,
         val results: Array<People>
     )
-
+    @Parcelize
     data class People(
         val name: String,
         val birthYear: String,
@@ -25,5 +28,5 @@ class People() {
         val url: String,
         val created: String,
         val edited: String
-    )
+    ): Parcelable
 }

@@ -1,19 +1,22 @@
 package dev.bonch.starwarswiki.models
 
-class Species {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+class Specie {
     data class Pojo (
         val count: Int,
         val next: String?,
         val previous: String?,
-        val results: Array<Species>
+        val results: Array<Specie>
     )
-
-    data class Speciew (
+    @Parcelize
+    data class Specie (
 
         val name : String,
         val classification : String,
         val designation : String,
-        val average_height : Int,
+        val average_height : String,
         val skin_colors : String,
         val hair_colors : String,
         val eye_colors : String,
@@ -25,5 +28,5 @@ class Species {
         val created : String,
         val edited : String,
         val url : String
-    )
+    ): Parcelable
 }
